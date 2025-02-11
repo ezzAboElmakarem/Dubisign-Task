@@ -17,6 +17,11 @@ class _CategoriesListviewState extends State<CategoriesListview> {
 
   @override
   Widget build(BuildContext context) {
+    List<dynamic> modifiedCategoriesList = [
+      "  All  ",
+      ...widget.categoriesList
+    ];
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 26.h),
       child: SizedBox(
@@ -24,14 +29,12 @@ class _CategoriesListviewState extends State<CategoriesListview> {
         child: ListView.separated(
           padding: EdgeInsets.symmetric(horizontal: 14.w),
           scrollDirection: Axis.horizontal,
-          itemCount: widget.categoriesList.length,
+          itemCount: modifiedCategoriesList.length,
           separatorBuilder: (context, index) => const SizedBox(width: 12),
           itemBuilder: (context, index) {
             bool isSelected = selectedIndex == index;
             return Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 10.h,
-              ),
+              padding: EdgeInsets.symmetric(vertical: 10.h),
               child: InkWell(
                 onTap: () {
                   setState(() {
@@ -64,7 +67,7 @@ class _CategoriesListviewState extends State<CategoriesListview> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 12.w, vertical: 8),
                       child: Text(
-                        widget.categoriesList[index],
+                        modifiedCategoriesList[index],
                         style: AppStyles.styleMedium18()
                             .copyWith(color: ColorsStyles.blackColor),
                       ),
