@@ -10,8 +10,10 @@ import 'package:dubisign_task_clean_arch/features/home/data/repos/home_repo_impl
 import 'package:dubisign_task_clean_arch/features/home/domain/entities/product_entity.dart';
 import 'package:dubisign_task_clean_arch/features/home/domain/use_cases/get_categories_use_case.dart';
 import 'package:dubisign_task_clean_arch/features/home/domain/use_cases/get_products_use_Case.dart';
+import 'package:dubisign_task_clean_arch/features/home/domain/use_cases/get_specific_category_products_use_case.dart';
 import 'package:dubisign_task_clean_arch/features/home/presentation/manager/get_categories_cubit/get_categories_cubit.dart';
 import 'package:dubisign_task_clean_arch/features/home/presentation/manager/get_products_cubit/get_products_cubit.dart';
+import 'package:dubisign_task_clean_arch/features/home/presentation/manager/get_specific_category_products/get_specific_category_products_cubit.dart';
 import 'package:flutter/services.dart' as services;
 
 import 'package:flutter/material.dart';
