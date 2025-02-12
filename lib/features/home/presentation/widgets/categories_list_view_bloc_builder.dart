@@ -11,14 +11,18 @@ class CategoriesListViewBlocBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
+        final cubit = HomeCubit.get(context);
+
         if (state is CategoriesSuccess) {
           return CategoriesListview(
-            categoriesList: state.categories,
+            categoriesList: cubit.categoriesList,
           );
         } else if (state is CategoriesFailure) {
           return Text(state.error);
         } else {
-          return const Center(child: CircularProgressIndicator());
+          return CategoriesListview(
+            categoriesList: cubit.categoriesList,
+          );
         }
       },
     );

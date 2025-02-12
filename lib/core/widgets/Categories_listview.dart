@@ -33,8 +33,10 @@ class _CategoriesListviewState extends State<CategoriesListview> {
   }
 
   Widget buildListView(BuildContext context, List<dynamic> categories) {
+    final cubit = HomeCubit.get(context);
+
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 26.h),
+      padding: EdgeInsets.symmetric(vertical: 16.h),
       child: SizedBox(
         height: 66.h,
         child: ListView.separated(
@@ -52,7 +54,8 @@ class _CategoriesListviewState extends State<CategoriesListview> {
                   setState(() {
                     selectedIndex = index;
                   });
-                  context.read<HomeCubit>().getProductsByCategory(index);
+                  cubit.getProductsByCategory(index);
+                  // context.read<HomeCubit>().getProductsByCategory(index);
                 },
                 child: Container(
                   height: 38.h,

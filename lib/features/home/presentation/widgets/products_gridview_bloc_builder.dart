@@ -13,9 +13,10 @@ class ProductsGridViewBlocBuilder extends StatelessWidget {
     return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {},
       builder: (context, state) {
+        final cubit = HomeCubit.get(context);
         if (state is ProductsSuccess) {
           log("All products loaded: ${state.products.length} items");
-          return ProductsGridView(products: state.products);
+          return ProductsGridView(products: cubit.allProducts);
         } else if (state is GetSpecificCategoryProductsSuccess) {
           log("Category products loaded: ${state.products.length} items");
           return ProductsGridView(products: state.products);
@@ -24,8 +25,10 @@ class ProductsGridViewBlocBuilder extends StatelessWidget {
           return Center(
               child: Text(
                   "Error: ${state is ProductsFailure ? state.error : (state as GetSpecificCategoryProductsFailure).error}"));
-        } else {
+        } else if (state is GetSpecificCategoryProductsLoading) {
           return const Center(child: CircularProgressIndicator());
+        } else {
+          return ProductsGridView(products: cubit.allProducts);
         }
       },
     );

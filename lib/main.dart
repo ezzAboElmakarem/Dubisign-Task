@@ -34,6 +34,7 @@ void main() async {
 
   await Hive.openBox<ProductEntity>(KproductsBox);
   await Hive.openBox<dynamic>(KcategoriesBox);
+  await Hive.openBox<dynamic>(KcategoriesBox);
 
   Bloc.observer = MyBlocObserver();
   runApp(const MyApp());
@@ -47,17 +48,16 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) => HomeCubit(
-                  getCategoriesUseCase:
-                      GetCategoriesUseCase(getIt.get<HomeRepoImpl>()),
-                  getProductsUseCase:
-                      GetProductsUseCase(getIt.get<HomeRepoImpl>()),
-                  getSpecificCategoryProductsUseCase:
-                      GetSpecificCategoryProductsUseCase(
-                          getIt.get<HomeRepoImpl>()),
-                )..getCategories()
-            // ..getAllProducts(),
-            ),
+          create: (context) => HomeCubit(
+            getCategoriesUseCase:
+                GetCategoriesUseCase(getIt.get<HomeRepoImpl>()),
+            getProductsUseCase: GetProductsUseCase(getIt.get<HomeRepoImpl>()),
+            getSpecificCategoryProductsUseCase:
+                GetSpecificCategoryProductsUseCase(getIt.get<HomeRepoImpl>()),
+          )
+            ..getAllProducts()
+            ..getCategories(),
+        ),
 
         // BlocProvider(
         //   create: (context) {
