@@ -1,4 +1,6 @@
 import 'package:dubisign_task_clean_arch/core/utils/app_cached_image.dart';
+import 'package:dubisign_task_clean_arch/core/utils/routes.dart';
+import 'package:dubisign_task_clean_arch/features/cart/presentation/views/cart_view.dart';
 
 import '../utils/assets.dart';
 import '../utils/colors_styles.dart';
@@ -47,32 +49,37 @@ class CardImageSection extends StatelessWidget {
           left: 0,
           right: 0,
           child: Center(
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Image.asset(AssetsData.whiteCircleBacground),
-                Positioned(
-                  bottom: 4,
-                  right: 6,
-                  left: 6,
-                  child: Container(
-                    width: 48.w,
-                    height: 48.h,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: ColorsStyles.blackColor,
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(12.w),
-                      child: SvgPicture.asset(
-                        AssetsData.cartIcon,
-                        colorFilter: const ColorFilter.mode(
-                            ColorsStyles.whiteColor, BlendMode.srcIn),
+            child: InkWell(
+              onTap: () {
+                RouteUtils.navigateTo(CartView());
+              },
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Image.asset(AssetsData.whiteCircleBacground),
+                  Positioned(
+                    bottom: 4,
+                    right: 6,
+                    left: 6,
+                    child: Container(
+                      width: 48.w,
+                      height: 48.h,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: ColorsStyles.blackColor,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(12.w),
+                        child: SvgPicture.asset(
+                          AssetsData.cartIcon,
+                          colorFilter: const ColorFilter.mode(
+                              ColorsStyles.whiteColor, BlendMode.srcIn),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

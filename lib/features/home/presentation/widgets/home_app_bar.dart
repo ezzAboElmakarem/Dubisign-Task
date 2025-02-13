@@ -1,6 +1,8 @@
 import 'package:dubisign_task_clean_arch/core/utils/assets.dart';
 import 'package:dubisign_task_clean_arch/core/utils/colors_styles.dart';
+import 'package:dubisign_task_clean_arch/core/utils/routes.dart';
 import 'package:dubisign_task_clean_arch/core/utils/text_styles.dart';
+import 'package:dubisign_task_clean_arch/features/cart/presentation/views/cart_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -48,10 +50,15 @@ class HomeAppBar extends StatelessWidget {
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-            child: SvgPicture.asset(
-              AssetsData.cartIcon,
-              height: 30.h,
-              width: 30.w,
+            child: InkWell(
+              onTap: () {
+                RouteUtils.navigateTo(CartView());
+              },
+              child: SvgPicture.asset(
+                AssetsData.cartIcon,
+                height: 30.h,
+                width: 30.w,
+              ),
             ),
           ),
         )
