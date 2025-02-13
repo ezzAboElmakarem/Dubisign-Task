@@ -1,43 +1,56 @@
 import 'package:dubisign_task_clean_arch/core/utils/assets.dart';
 import 'package:dubisign_task_clean_arch/core/utils/colors_styles.dart';
 import 'package:dubisign_task_clean_arch/core/utils/text_styles.dart';
+import 'package:dubisign_task_clean_arch/features/cart/domain/entities/cart_product_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PaymentSummary extends StatelessWidget {
+  final List<CartProductEntity> userProductsList;
+
   const PaymentSummary({
     super.key,
+    required this.userProductsList,
   });
+
+  double calculateSubtotal(List<CartProductEntity> updatedProducts) {
+    return updatedProducts.fold(
+      0.0,
+      (sum, item) =>
+          sum +
+          ((item.productEntity.productPrice ?? 0) *
+              (item.productQuantatiy ?? 0)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    double subtotal = calculateSubtotal(userProductsList);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 29.w),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10.w),
-        child: Column(
-          children: [
-            const PaymentDetailedItem(
-              paymentTitle: "Subtotal",
-              paymentAmount: "90.00 EGP",
+      child: Column(
+        children: [
+          PaymentDetailedItem(
+            paymentTitle: "Subtotal",
+            paymentAmount: "${subtotal.toStringAsFixed(2)} EGP",
+          ),
+          const PaymentDetailedItem(
+            paymentTitle: "Shipping",
+            paymentAmount: "15.00 EGP",
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.h),
+            child: Image.asset(
+              AssetsData.dotsDivider,
+              color: const Color(0xffE2E2E2),
             ),
-            const PaymentDetailedItem(
-              paymentTitle: "Shipping",
-              paymentAmount: "15.00 EGP",
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.h),
-              child: Image.asset(
-                AssetsData.dotsDivider,
-                color: const Color(0xffE2E2E2),
-              ),
-            ),
-            const PaymentDetailedItem(
-              paymentTitle: "Total",
-              paymentAmount: "80.00 EGP",
-            ),
-          ],
-        ),
+          ),
+          PaymentDetailedItem(
+            paymentTitle: "Total",
+            paymentAmount: "${(subtotal + 15.0).toStringAsFixed(2)} EGP",
+          ),
+        ],
       ),
     );
   }

@@ -1,12 +1,15 @@
-import 'package:dubisign_task_clean_arch/core/utils/assets.dart';
+import 'package:dubisign_task_clean_arch/core/utils/app_cached_image.dart';
 import 'package:dubisign_task_clean_arch/core/utils/colors_styles.dart';
+import 'package:dubisign_task_clean_arch/features/cart/domain/entities/cart_product_entity.dart';
 import 'package:dubisign_task_clean_arch/features/cart/presentation/widgets/cart_product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CartProductsListView extends StatelessWidget {
+  final List<CartProductEntity> userProductsList;
   const CartProductsListView({
     super.key,
+    required this.userProductsList,
   });
 
   @override
@@ -14,21 +17,23 @@ class CartProductsListView extends StatelessWidget {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: 3,
+      itemCount: userProductsList.length,
       padding: EdgeInsets.only(top: 18.h, right: 20.w, left: 20.w),
       separatorBuilder: (context, index) => SizedBox(
         height: 16.h,
       ),
       itemBuilder: (context, index) {
-        return const CartProductItem();
+        return CartProductItem(userProductItemData: userProductsList[index]);
       },
     );
   }
 }
 
 class CartProductItem extends StatelessWidget {
+  final CartProductEntity userProductItemData;
   const CartProductItem({
     super.key,
+    required this.userProductItemData,
   });
 
   @override
@@ -61,16 +66,23 @@ class CartProductItem extends StatelessWidget {
                 ],
               ),
               child: FittedBox(
-                child: Image.asset(
-                  // height: 144.h,
-
-                  AssetsData.product,
+                child: AppCashedImage(
+                  imageUrl:
+                      userProductItemData.productEntity.productImage ?? '',
                   fit: BoxFit.cover,
                 ),
               ),
+              //   Image.asset(
+              //     // height: 144.h,
+
+              //     AssetsData.product,
+              //     fit: BoxFit.cover,
+              //   ),
             ),
             SizedBox(width: 16.w),
-            const CartProductDetails(),
+            CartProductDetails(
+              userProductItemData: userProductItemData,
+            ),
           ],
         ),
       ),

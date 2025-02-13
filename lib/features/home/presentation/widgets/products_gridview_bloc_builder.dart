@@ -1,35 +1,34 @@
 import 'dart:developer';
-
-import 'package:dubisign_task_clean_arch/features/home/presentation/manager/get_products_cubit/get_products_cubit.dart';
+import 'package:dubisign_task_clean_arch/features/home/presentation/manager/home_cubit.dart';
+import 'package:dubisign_task_clean_arch/features/home/presentation/manager/home_cubit_states.dart';
 import 'package:dubisign_task_clean_arch/features/home/presentation/widgets/products_gridview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductsGridViewBlocBuilder extends StatelessWidget {
-  const ProductsGridViewBlocBuilder({
-    super.key,
-  });
+  const ProductsGridViewBlocBuilder({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<GetProductsCubit, GetProductsState>(
+    return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {},
       builder: (context, state) {
-        final cubit = GetProductsCubit.get(context);
-
+        final cubit = HomeCubit.get(context);
         if (state is ProductsSuccess) {
-          log(cubit.productsData[1].productName.toString());
-          log(cubit.productsData[1].productDescription.toString());
-
-          return ProductsGridView(
-            cubit: cubit,
-          );
-        } else if (state is ProductsFailure) {
-          return Text(state.errMessage);
-        } else if (state is ProductsLoading) {
-          return CircularProgressIndicator();
+          log("All products loaded: ${state.products.length} items");
+          return ProductsGridView(products: cubit.allProducts);
+        } else if (state is GetSpecificCategoryProductsSuccess) {
+          log("Category products loaded: ${state.products.length} items");
+          return ProductsGridView(products: state.products);
+        } else if (state is ProductsFailure ||
+            state is GetSpecificCategoryProductsFailure) {
+          return Center(
+              child: Text(
+                  "Error: ${state is ProductsFailure ? state.error : (state as GetSpecificCategoryProductsFailure).error}"));
+        } else if (state is GetSpecificCategoryProductsLoading) {
+          return const Center(child: CircularProgressIndicator());
         } else {
-          return CircularProgressIndicator();
+          return ProductsGridView(products: cubit.allProducts);
         }
       },
     );
