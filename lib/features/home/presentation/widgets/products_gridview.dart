@@ -1,7 +1,6 @@
 import 'package:dubisign_task_clean_arch/core/utils/colors_styles.dart';
 import 'package:dubisign_task_clean_arch/core/widgets/custom_card.dart';
 import 'package:dubisign_task_clean_arch/features/home/domain/entities/product_entity.dart';
-import 'package:dubisign_task_clean_arch/features/home/presentation/manager/get_products_cubit/get_products_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

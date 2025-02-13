@@ -6,6 +6,9 @@ import 'package:dubisign_task_clean_arch/core/utils/functions/setup_service_loca
 import 'package:dubisign_task_clean_arch/core/utils/keyboard_close_observer.dart';
 import 'package:dubisign_task_clean_arch/core/utils/navigation_bar_view.dart';
 import 'package:dubisign_task_clean_arch/core/utils/routes.dart';
+import 'package:dubisign_task_clean_arch/features/cart/data/repos/cart_repo_impl.dart';
+import 'package:dubisign_task_clean_arch/features/cart/domain/use_cases/get_user_products_data_use_case.dart';
+import 'package:dubisign_task_clean_arch/features/cart/presentation/manager/cubit/cart_cubit.dart';
 import 'package:dubisign_task_clean_arch/features/home/data/repos/home_repo_impl.dart';
 // import 'package:dubisign_task_clean_arch/features/home/data/repos/home_repo_impl.dart';
 import 'package:dubisign_task_clean_arch/features/home/domain/entities/product_entity.dart';
@@ -34,7 +37,6 @@ void main() async {
 
   await Hive.openBox<ProductEntity>(KproductsBox);
   await Hive.openBox<dynamic>(KcategoriesBox);
-  await Hive.openBox<dynamic>(KcategoriesBox);
 
   Bloc.observer = MyBlocObserver();
   runApp(const MyApp());
@@ -58,7 +60,16 @@ class MyApp extends StatelessWidget {
             ..getAllProducts()
             ..getCategories(),
         ),
-
+        BlocProvider(
+          create: (context) => CartCubit(
+            getProductsUseCase: GetProductsUseCase(getIt.get<HomeRepoImpl>()),
+            getUserProductsUseCase: GetUserProductsUseCase(
+              getIt.get<CartRepoImpl>(),
+            ),
+          )
+            // ..getAllProducts()
+            ..getUserProducts(),
+        ),
         // BlocProvider(
         //   create: (context) {
         //     return GetCategoriesCubit(

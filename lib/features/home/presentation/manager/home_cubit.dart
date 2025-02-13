@@ -5,7 +5,6 @@ import 'package:dubisign_task_clean_arch/features/home/domain/use_cases/get_prod
 import 'package:dubisign_task_clean_arch/features/home/domain/use_cases/get_specific_category_products_use_case.dart';
 import 'package:dubisign_task_clean_arch/features/home/presentation/manager/home_cubit_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   final GetCategoriesUseCase getCategoriesUseCase;
@@ -36,7 +35,7 @@ class HomeCubit extends Cubit<HomeState> {
         emit(CategoriesFailure(failure.message));
       },
       (categories) {
-        categoriesList = ["All", ...categories]; // Add "All" at the beginning
+        categoriesList = ["All", ...categories];
         log("Categories loaded: $categoriesList");
         emit(CategoriesSuccess(categoriesList));
       },
